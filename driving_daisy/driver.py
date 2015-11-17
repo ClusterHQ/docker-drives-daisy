@@ -28,13 +28,13 @@ class StdOutListener(StreamListener):
         if command not in ["f", "b", "l", "r"]:
             return
         # do something with this command
-        return True
+        print "Saw command %s" % (command,)
 
     def on_error(self, status):
         print status
 
 
-if __name__ == '__main__':
+def main():
     l = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
