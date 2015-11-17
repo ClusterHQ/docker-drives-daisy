@@ -21,12 +21,13 @@ def get_command(tweet):
     return None
 
 
-
-#This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
-        print data
+        command = get_command(data)
+        if command not in ["f", "b", "l", "r"]:
+            return
+        # do something with this command
         return True
 
     def on_error(self, status):
@@ -34,12 +35,9 @@ class StdOutListener(StreamListener):
 
 
 if __name__ == '__main__':
-
-    #This handles Twitter authetification and the connection to Twitter Streaming API
     l = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
 
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(track=['python', 'javascript', 'ruby'])
+    stream.filter(track=['#daisy'])
